@@ -1,0 +1,23 @@
+name: Continuos Integration and Deployment
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Setup .Net 5 
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'
+
+      - name: Restore dependencies
+        run: cd LiveCICD && dotnet restore
+
+      - name: Build app
+        run: cd LiveCICD && dotnet build -c Release --no-restore      
