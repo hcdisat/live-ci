@@ -20,18 +20,21 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
+      
+      - name: Change directory to main solution
+        run: cd LiveCICD
 
       - name: Restore dependencies
-        run: cd LiveCICD && dotnet restore
+        run: dotnet restore
 
       - name: Build app
-        run: cd LiveCICD && dotnet build -c Release --no-restore
+        run: dotnet build -c Release --no-restore
 
       - name: Run automated tests
-        run: cd LiveCICD && dotnet test -c Release --no-build
+        run: dotnet test -c Release --no-build
 
       - name: Publish app
-        run: cd LiveCICD && dotnet publish -c Release -o ./out
+        run: dotnet publish -c Release -o ./out
 
       - name: Deploy to Azure Web Apps
         uses: azure/webapps-deploy@v2
