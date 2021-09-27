@@ -20,9 +20,6 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-      
-      - name: Change directory to main solution
-        run: cd LiveCICD
 
       - name: Restore dependencies
         run: dotnet restore
