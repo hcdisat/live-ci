@@ -38,7 +38,7 @@ jobs:
 
       - name: Run automated tests
         env:
-          ConnectionsStrings__DefaultConnection: "Server=localhost:1433;Database=CiCdDemo_Test;User=sa;Password=Pass~w0rd8"
+          ConnectionsStrings__DefaultConnection: "Server=localhost;Database=CiCdDemo_Test;User=sa;Password=Pass~w0rd8"
         run: dotnet test -c Release --no-build
 
       - name: Publish app
