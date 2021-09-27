@@ -4,6 +4,10 @@ on:
     branches:
       - main
 
+env:
+  DOTNET_VERSION: '5.0.x'
+  AZURE_WEBAPP_NAME: LiveCICD
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,7 +18,7 @@ jobs:
       - name: Setup .Net 5 
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore dependencies
         run: cd LiveCICD && dotnet restore
@@ -24,3 +28,13 @@ jobs:
 
       - name: Run automated tests
         run: cd LiveCICD && dotnet test -c Release --no-build
+
+      - name: Publish app
+        run: cd LiveCICD && dotnet publish -c Release -o ./out
+
+      -name: Deploy to Azure Web Apps
+        usues: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_SECRET }}
+          package: ./out
