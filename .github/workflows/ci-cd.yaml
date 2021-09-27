@@ -8,6 +8,7 @@ env:
   DOTNET_VERSION: '5.0.x'
   AZURE_WEBAPP_NAME: LiveCICD
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
